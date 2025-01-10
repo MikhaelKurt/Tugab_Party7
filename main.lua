@@ -4,19 +4,20 @@ require("src.background")
 
 local player = Player
 local background = Background
-
--- local currentPlatform = 0
 local platformTable = {}
 
+-- State variables
 local gameState = "menu"
 local loseState = false
 local highScore = 0
 local score = 0
 
+-- Load fonts
 local textFont = love.graphics.newFont("assets/m6x11.ttf", 36)
 local buttonFont = love.graphics.newFont("assets/m6x11.ttf", 48)
 local titleFont = love.graphics.newFont("assets/Rah-Regular.otf", 72)
 
+-- Called once at the start of the game
 function love.load()
   love.graphics.setFont(buttonFont)
   love.window.setMode(SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -25,8 +26,10 @@ function love.load()
   love.window.setTitle("Roga Lompat | " .. TITLE_LIST[math.ceil(love.math.random() * #TITLE_LIST)])
 end
 
+-- Called to draw to the screen
 function love.draw()
   if gameState == "menu" then
+    -- Game is at start menu
     love.graphics.setBackgroundColor(173 / 255, 216 / 255, 230 / 255, 1)
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print("ROGA", titleFont, (SCREEN_WIDTH - titleFont:getWidth("ROGA")) / 2,
@@ -42,6 +45,7 @@ function love.draw()
       0, 1, 1)
     love.graphics.setColor(1, 1, 1, 1)
   elseif gameState == "game" then
+    -- Game is playing
     background.draw(background)
 
     for k, platform in pairs(platformTable) do
@@ -90,10 +94,12 @@ function love.draw()
   end
 end
 
+-- Called every frame
 function love.update(dt)
   if gameState == "menu" then
-
+    -- Game is at start menu, nothing to update here
   elseif gameState == "game" and loseState == false then
+    -- Game is playing and not losing
     local dx = 0
     local dy = 0
     local scroll = 0
@@ -108,20 +114,15 @@ function love.update(dt)
       end
     end
 
-    -- print(player.position.x, player.position.y)
-
     -- Collision with the ground
     if player.position.y + player.dimension.height > SCREEN_HEIGHT then
       loseState = true
       if highScore < score then
         highScore = score
       end
-      -- player.yVel = BOUNCE
-      -- dy = dy + player.yVel
     else
       -- Collision with platforms
       for k, platform in pairs(platformTable) do
-        -- print("Platform ", k, platform.position.x, platform.position.y)
         if
             (
               player.position.y + player.dimension.height >= platform.position.y - 10
@@ -180,8 +181,10 @@ function love.update(dt)
   end
 end
 
-function love.mousepressed(x, y, button, isTouch)
+-- Called when a mouse is pressed
+function love.mousepressed(x, y, button, _isTouch)
   if button == 1 then
+    -- Left click
     if gameState == "menu" then
       if (x > SCREEN_WIDTH / 3 and y > SCREEN_HEIGHT * 2 / 5) and (x < SCREEN_WIDTH * 2 / 3 and y < SCREEN_HEIGHT * 3 / 5) then
         gameState = "game"

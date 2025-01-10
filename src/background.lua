@@ -1,3 +1,4 @@
+-- Used to help draw the background of the game
 Background = {
   sprite = love.graphics.newImage("assets/bg.png"),
   scroll = 0

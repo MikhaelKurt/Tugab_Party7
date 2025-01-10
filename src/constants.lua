@@ -6,7 +6,7 @@ BOUNCE = -15
 PLAYER_SPEED = 7.5
 SCROLL_THRESHOLD = 120
 
-
+-- List of title to randomize
 TITLE_LIST = {
   "The Tallest Jumping Elephants!",
   "Absolutely Brill",

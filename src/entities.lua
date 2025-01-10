@@ -1,3 +1,4 @@
+-- Player entity
 Player = {
   sprite = love.graphics.newImage("assets/jumper.png"),
   dimension = { width = 90, height = 60 },
@@ -12,10 +13,9 @@ function Player.draw(self, x, y, rot, flip)
   else
     love.graphics.draw(self.sprite, x, y, rot, 1, 1)
   end
-  -- love.graphics.rectangle("fill", x, y, self.dimension.width, self.dimension.height)
 end
 
--- inside entities.lua
+-- Platform entity
 Platform = {
   sprite = love.graphics.newImage("assets/wood.png"),
 }
@@ -34,7 +34,6 @@ function Platform.new()
   }
 
   function newPlatform.draw(self, x, y)
-    -- love.graphics.rectangle("fill", x, y, self.dimension.width, self.dimension.height)
     love.graphics.draw(self.sprite, x, y, 0, 1 / 8, 1 / 10)
   end
 
